@@ -26,19 +26,13 @@ def check(text):
     print(text)
     split = text.split(' ')
 
-    if split[0] == 'odpal':
-        text = text.replace('odpal ', '')
-        if text in config['odpal']:
-            os.startfile(config['odpal'][text], 'open')
-    elif split[0] == 'otworz':
-        text = text.replace('otworz ', '')
-        if text in config['otworz']:
-            os.startfile(config['otworz'][text], 'open')
-    elif split[0] == 'wejdz':
+    if split[0] == 'wejdz': #Odpalanie przez przegladarake stron za pomocą komendy wejdz
         text = text.replace('wejdz na ', '')
-        if text in config['wejdz']:
-            webbrowser.open(config['wejdz'][text])
+        webbrowser.open(config[split[0]][text])
 
+    elif split[0] in config.sections(): #Odpalanie programów/folderów, czy innych rzeczy z explorer'a za pomocą dostosowanych przez siebie komend
+        text = text.replace(split[0]+' ', '')
+        os.startfile(config[split[0]][text], 'open')
 
 def callback(recognizer, audio):
     try:
